@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YouTube Title & Tag Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    h1 {
+      color: #cc0000;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 0;
+      width: 100%;
+    }
+    #output {
+      margin-top: 20px;
+    }
+    .tags span {
+      display: inline-block;
+      background: #e0e0e0;
+      padding: 5px 10px;
+      border-radius: 20px;
+      margin: 5px 5px 0 0;
+    }
+    button.copy {
+      margin-top: 10px;
+      background: #cc0000;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>YouTube Title & Tag Generator</h1>
+
+<input type="text" id="topicInput" placeholder="Enter your video topic...">
+<button onclick="generate()">Generate Title & Tags</button>
+
+<div id="output">
+  <h3>Suggested Title:</h3>
+  <p id="title"></p>
+  <button class="copy" onclick="copyText('title')">Copy Title</button>
+
+  <h3>Suggested Tags:</h3>
+  <div class="tags" id="tags"></div>
+  <button class="copy" onclick="copyTags()">Copy Tags</button>
+</div>
+
+<script>
+function generate() {
+  const topic = document.getElementById('topicInput').value.trim();
+  if (!topic) return alert('Please enter a topic!');
+
+  // Basic title formula
+  const title = `How to ${topic} Like a Pro in 2024!`;
+  const keywords = topic.toLowerCase().split(" ");
+  const tags = [...keywords, topic, "youtube", "tips", "tricks", "2024"];
+
+  document.getElementById('title').textContent = title;
+
+  const tagsContainer = document.getElementById('tags');
+  tagsContainer.innerHTML = "";
+  tags.forEach(tag => {
+    const span = document.createElement('span');
+    span.textContent = tag;
+    tagsContainer.appendChild(span);
+  });
+}
+
+function copyText(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text);
+  alert("Copied!");
+}
+
+function copyTags() {
+  const tags = Array.from(document.querySelectorAll('#tags span'))
+                    .map(tag => tag.textContent).join(', ');
+  navigator.clipboard.writeText(tags);
+  alert("Tags Copied!");
+}
+</script>
+
+</body>
+</html>
+initial commit
